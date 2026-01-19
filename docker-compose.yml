@@ -1,0 +1,35 @@
+version: '3.9'  # Docker Compose version
+
+services:
+  app:
+    container_name: node_app
+    image: anilnagarro24/ts-docker-crud:1.0.0
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '3000:3000'   # maps container port 3000 to host 3000
+    environment:
+      - NODE_ENV=development
+      - MONGO_URI=mongodb://admin:admin123@mongo:27017/mydb?authSource=admin
+    depends_on:
+      - mongo
+    volumes:
+      - .:/app
+      - /app/node_modules  # prevents overwriting node_modules
+
+  mongo:
+    container_name: mongo_db
+    image: mongo:6.0
+    ports:
+      - '27017:27017'
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=admin123
+      - MONGO_INITDB_DATABASE=mydb
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:
+    driver: local
