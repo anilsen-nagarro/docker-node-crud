@@ -20,30 +20,28 @@ The project covers:
 - OS: Windows + WSL (Ubuntu)
 
 📂 Project Structure
-    project-root/
-    │
-    ├── backend/
-    │   ├── Dockerfile
-    │   └── src/
-    │       ├── routes/
-    │       ├── controllers/
-    │       ├── models/
-    │       ├── app.ts
-    │       └── server.ts
-    │
-    ├── frontend/
-    │   ├── Dockerfile
-    │   ├── public/
-    │   │   ├── index.html
-    │   │   └── style.css
-    │   └── src/
-    │       └── app.js
-    │
-    ├── docker-compose.yml
-    ├── package.json
-    ├── package-lock.json
-    └── README.md
-
+==================================================================
+project-root/
+├── backend/
+│ ├── Dockerfile
+│ └── src/
+│ ├── routes/
+│ ├── controllers/
+│ ├── models/
+│ ├── app.ts
+│ └── server.ts
+├── frontend/
+│ ├── Dockerfile
+│ ├── public/
+│ │ ├── index.html
+│ │ └── style.css
+│ └── src/
+│ └── app.js
+├── docker-compose.yml
+├── package.json
+├── package-lock.json
+└── README.md
+==========================================================================
 
 ⚙️ Prerequisites
 - Docker 20.10+
