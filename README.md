@@ -3,6 +3,22 @@
 This project demonstrates containerization of a backend web application using Docker and Docker Compose.
 A simple Node.js CRUD API is built and connected to MongoDB using a multi-container setup.
 
+Steps to run the code in docker:
+    - docker compose up --build 
+        // this will build our images and run the container
+        // Also if facing error while building remove nodemon and package-lock.json
+    - docker ps -a 
+        // Check our containers
+    - docker logs container-id
+        // check backend app if shows mongodb connected
+
+    http://127.0.0.1:8080/
+        // Hit this in browser and perform CRUD operation.
+
+===================================================================================
+    Note: If it is not working because of any reason please reach out to me 
+        Anil Sen (anil.sen@nagarro.com)
+===================================================================================
 
 The project covers:
 - Docker image creation
@@ -58,7 +74,6 @@ project-root/
 - RESTful APIs
 
 🐳 Docker Implementation
-
     1️⃣ Dockerfile
     The backend application is containerized using a Dockerfile that:
         Uses Node.js base image
@@ -103,12 +118,6 @@ project-root/
         API endpoints tested
         MongoDB connection verified
         Logs inspected using Docker CLI
-
-    🧠 CI/CD Note (Important)
-        CI/CD pipeline is not included in this project because:
-        The assignment focuses on Docker fundamentals
-        No deployment target (cloud/server) was specified
-        CI/CD is optional and out of scope for this learning objective
 
 ⭐ Bonus
     Database service (MongoDB) added
