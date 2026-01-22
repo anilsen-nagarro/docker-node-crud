@@ -27,8 +27,9 @@ The project covers:
     │   ├── routes/
     │   ├── controllers/
     │   ├── models/
-    │   └── app.js
-    │
+    │   └── app.ts    
+    │   ├── server.ts
+    │   
     ├── Dockerfile
 =======
     ├──backend
