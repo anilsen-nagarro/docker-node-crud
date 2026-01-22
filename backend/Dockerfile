@@ -1,23 +1,3 @@
-FROM node:20
-
-WORKDIR /app
-
-# Step 1: Copy ONLY the manifest
-# Do NOT copy package-lock.json yet
-COPY package.json ./
-
-# Step 2: Install fresh (this creates a clean internal lockfile)
-RUN npm install
-
-# Step 3: Copy the rest of your source code
-COPY . .
-
-RUN npm run build
-
-EXPOSE 3000
-CMD ["node", "dist/server.js"]
-
-
 # Base image
 FROM node:20-alpine
 
