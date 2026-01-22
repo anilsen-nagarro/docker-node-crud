@@ -22,6 +22,7 @@ The project covers:
 📂 Project Structure
     project-root/
     │
+<<<<<<< Updated upstream
     ├── src/
     │   ├── routes/
     │   ├── controllers/
@@ -29,6 +30,24 @@ The project covers:
     │   └── app.js
     │
     ├── Dockerfile
+=======
+    ├──backend
+            |── Dockerfile
+            /src/
+    │       ├── routes/
+    │       ├── controllers/
+    │       ├── models/
+    │       └── app.ts    
+    │       ├── server.ts
+    │__frontend
+                |── Dockerfile
+            /public/
+            |── Dockerfile
+            |-app.js
+            |-index.html
+            |-style.css
+    |          /src
+>>>>>>> Stashed changes
     ├── docker-compose.yml
     ├── package.json
     ├── package-lock.json
