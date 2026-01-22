@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Item CRUD App</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="container">
+    <h1>Item CRUD Application</h1>
+
+    <form id="itemForm">
+      <input type="hidden" id="itemId" />
+
+      <input
+        type="text"
+        id="name"
+        placeholder="Enter item name"
+        required
+      />
+      <br/>
+
+      <input
+        type="text"
+        id="price"
+        placeholder="Enter item price"
+        required
+      />
+      <br/>
+
+
+      <input
+        type="text"
+        id="description"
+        placeholder="Enter item description"
+        required
+      />
+
+      <button type="submit">Save Item</button>
+      <button type="button" id="cancelBtn">Cancel</button>
+    </form>
+
+    <h2>Items</h2>
+    <ul id="itemList"></ul>
+  </div>
+
+  <script src="./app.js"></script>
+</body>
+</html>
