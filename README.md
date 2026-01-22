@@ -22,26 +22,28 @@ The project covers:
 📂 Project Structure
     project-root/
     │
-    ├──backend
-            |── Dockerfile
-            /src/
+    ├── backend/
+    │   ├── Dockerfile
+    │   └── src/
     │       ├── routes/
     │       ├── controllers/
     │       ├── models/
-    │       └── app.ts    
-    │       ├── server.ts
-    │__frontend
-                |── Dockerfile
-            /public/
-            |── Dockerfile
-            |-app.js
-            |-index.html
-            |-style.css
-    |          /src
+    │       ├── app.ts
+    │       └── server.ts
+    │
+    ├── frontend/
+    │   ├── Dockerfile
+    │   ├── public/
+    │   │   ├── index.html
+    │   │   └── style.css
+    │   └── src/
+    │       └── app.js
+    │
     ├── docker-compose.yml
     ├── package.json
     ├── package-lock.json
     └── README.md
+
 
 ⚙️ Prerequisites
 - Docker 20.10+
