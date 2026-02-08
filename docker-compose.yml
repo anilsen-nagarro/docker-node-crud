@@ -1,40 +1,146 @@
 version: '3.9'
 
 services:
-  backend:
-    container_name: node_backend_app
-    image: anilnagarro24/backend-app:1.0.0
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
+  # # loggin service started
+  loki:
+    image: grafana/loki:2.9.0
+    deploy:
+      replicas: 1
     ports:
-      - "3000:3000"
-    environment:
-      NODE_ENV: development
-      MONGO_URI: mongodb://admin:admin123@mongo:27017/mydb?authSource=admin
-    depends_on:
-      - mongo
+      - "3100:3100"
+    command: -config.file=/etc/loki/local-config.yaml
+    networks:
+      - logging-network
 
-  frontend:
-    container_name: frontend_app
-    image: anilnagarro24/frontend:1.0.0
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
+  fluent-bit:
+    image: fluent/fluent-bit:2.3
+    deploy:
+      mode: global
+    networks:
+      - logging-network
+    volumes:
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - /var/log:/var/log:ro
+    command:
+      - fluent-bit
+      - -i
+      - tail
+      - -p
+      - path=/var/lib/docker/containers/*/*.log
+      - -p
+      - parser=docker
+      - -o
+      - loki
+      - -p
+      - host=loki
+      - -p
+      - port=3100
+      - -p
+      - labels=job=docker
+
+  grafana:
+    image: grafana/grafana:10.3
+    deploy:
+      replicas: 1
     ports:
-      - "8080:80"
-    depends_on:
-      - backend
+      - "3001:3000"
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: admin
+    volumes:
+      - grafana-data:/var/lib/grafana
+    networks:
+      - logging-network
+
+  # #loggin service ends 
 
   mongo:
     container_name: mongo_db
     image: mongo:6.0
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
     environment:
-      MONGO_INITDB_ROOT_USERNAME: admin
-      MONGO_INITDB_ROOT_PASSWORD: admin123
       MONGO_INITDB_DATABASE: mydb
+    secrets:
+      - mongo_user
+      - mongo_password
+    command: ["--auth"]
     volumes:
       - mongo-data:/data/db
+      - ./mongo-backup:/backup 
+    networks:
+      - app-network
+      - logging-network
+
+  backend:
+    container_name: node_backend_app
+    image: anilnagarro24/advanced-backend-app:1.0.0
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    ports:
+      - target: 3000       # container port
+        published: 3000    # host port
+        protocol: tcp
+        mode: host         # ensures host can reach backend
+    environment:
+      NODE_ENV: development
+    secrets:
+      - mongo_user
+      - mongo_password
+    volumes:
+      - ./logs:/app/logs
+    depends_on:
+      - mongo
+    networks:
+      - app-network
+      - logging-network
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+
+  frontend:
+    container_name: frontend_app
+    image: anilnagarro24/advanced-frontend:1.0.0
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    ports:
+      - target: 80
+        published: 8080
+        protocol: tcp
+        mode: host
+    depends_on:
+      - backend
+    networks:
+      - app-network
+      - logging-network
 
 volumes:
   mongo-data:
+  loki-data:
+  grafana-data:
+  frontend-cache:
+
+networks:
+  app-network:
+    driver: overlay
+  logging-network:
+    driver: overlay
+secrets:
+  mongo_user:
+    external: true
+  mongo_password:
+    external: true

@@ -128,3 +128,19 @@ project-root/
     ✔ Bonus question implemented
     ✔ Fully documented
     ✔ Linux CLI used via WSL
+
+
+Advance Assignment:
+    Additional Points to run advance level of assignment:
+        1. Run this compose file in swarm mode -> docker swarm init
+        2. Run the app -> docker stack deploy -c docker-compose.yml appstack
+        3. Listen the browser to http://localhost:8080/
+        4. Perform CRUD operations.
+
+        If not working connect with me-> anil.sen@nagarro.com
+
+    Points Which i have extendedas per assignment:
+        1. Added nginx.conf
+        2. Update docker file of backend to create secure, multistage, and small size fast build.
+        3. Update compose file to add network, overlay network, swarm mode, replicas, restart, container privillage.
+
