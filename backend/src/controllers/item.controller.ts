@@ -4,7 +4,7 @@ import Item from '../models/item.model';
 export const createItem = async (req: Request, res: Response) => {
   try {
     const item = await Item.create(req.body);
-    console.log('Created Item', item);
+    console.log('Created Item', JSON.stringify(item));
     
     res.status(201).json(item);
   } catch (error) {
@@ -14,7 +14,7 @@ export const createItem = async (req: Request, res: Response) => {
 
 export const getItems = async (_req: Request, res: Response) => {
   const items = await Item.find();
-  console.log('Get Item', items);
+  console.log('Get Item', JSON.stringify(items));
   res.json(items);
 };
 
@@ -23,7 +23,7 @@ export const getItemById = async (req: Request, res: Response) => {
   if (!item) {
     return res.status(404).json({ message: 'Item not found' });
   }
-      console.log('Get Item by id', item);
+      console.log('Get Item by id', JSON.stringify(item));
   res.json(item);
 };
 
@@ -34,7 +34,7 @@ export const updateItem = async (req: Request, res: Response) => {
   if (!item) {
     return res.status(404).json({ message: 'Item not found' });
   }
-  console.log('Updated item', item);
+  console.log('Updated item', JSON.stringify(item));
   
   res.json(item);
 };
@@ -44,7 +44,7 @@ export const deleteItem = async (req: Request, res: Response) => {
   if (!item) {
     return res.status(404).json({ message: 'Item not found' });
   }
-  console.log('Deleted Items', item);
+  console.log('Deleted Items', JSON.stringify(item));
   
   res.json({ message: 'Item deleted' });
 };
