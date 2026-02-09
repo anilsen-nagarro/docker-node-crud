@@ -12,6 +12,7 @@ export const createItem = async (req: Request, res: Response) => {
 
 export const getItems = async (_req: Request, res: Response) => {
   const items = await Item.find();
+  console.log('Get Item', JSON.stringify(items));
   res.json(items);
 };
 
@@ -20,6 +21,7 @@ export const getItemById = async (req: Request, res: Response) => {
   if (!item) {
     return res.status(404).json({ message: 'Item not found' });
   }
+      console.log('Get Item by id', JSON.stringify(item));
   res.json(item);
 };
 
@@ -30,6 +32,8 @@ export const updateItem = async (req: Request, res: Response) => {
   if (!item) {
     return res.status(404).json({ message: 'Item not found' });
   }
+  console.log('Updated item', JSON.stringify(item));
+  
   res.json(item);
 };
 
@@ -38,5 +42,7 @@ export const deleteItem = async (req: Request, res: Response) => {
   if (!item) {
     return res.status(404).json({ message: 'Item not found' });
   }
+  console.log('Deleted Items', JSON.stringify(item));
+  
   res.json({ message: 'Item deleted' });
 };

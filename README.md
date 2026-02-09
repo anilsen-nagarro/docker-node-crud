@@ -128,3 +128,21 @@ project-root/
     ✔ Bonus question implemented
     ✔ Fully documented
     ✔ Linux CLI used via WSL
+
+
+Advance Assignment:
+    Additional Points to run advance level of assignment:
+        1. Run this compose file -> docker compose up
+        2. Listen the browser to http://localhost:8080/
+        3. Perform CRUD operations.
+        4. Go to browser listen on http://localhost:3100/ready - wsit for it to ready
+        5. Got to browser again and open http://localhost:3001
+        6. Explore the logs 
+
+        If not working connect with me-> anil.sen@nagarro.com
+
+    Points Which i have extendedas per assignment:
+        1. Added nginx.conf
+        2. Update docker file of backend to create secure, multistage, and small size fast build.
+        3. Update compose file to add network, overlay network, swarm mode, replicas, restart, container privillage.
+

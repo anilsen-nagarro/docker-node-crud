@@ -10,6 +10,8 @@ const descInput = document.getElementById("description");
 
 // Load items on page load
 async function loadItems() {
+  console.log('Load Items running');
+  
   const res = await fetch(API_URL);
   const items = await res.json();
 
@@ -66,6 +68,8 @@ function editItem(id, name, price, description) {
   nameInput.value = name;
   priceInput.value = price;
   descInput.value = description;
+  console.log('Edit item running');
+  
 }
 
 // Delete
@@ -73,6 +77,8 @@ async function deleteItem(id) {
   await fetch(`${API_URL}/${id}`, {
     method: "DELETE"
   });
+  console.log('Delete item running');
+  
   loadItems();
 }
 
