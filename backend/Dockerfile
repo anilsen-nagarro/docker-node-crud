@@ -1,23 +1,48 @@
-# Base image
-FROM node:20-alpine
+# =========================
+# Stage 1: Builder
+# =========================
+FROM node:20-alpine AS builder
 
-# Set working directory
 WORKDIR /app
 
-# Copy dependency files
-COPY package*.json ./
+# Copy only dependency files first (better caching)
+COPY package*.json tsconfig.json ./
 
-# Install dependencies
+# Install ALL dependencies (including devDependencies)
 RUN npm install
 
-# Install ts-node-dev globally for live reload
-RUN npm install -g ts-node-dev
+# Copy source code
+COPY src ./src
 
-# Copy all source code
-COPY . .
+# Compile TypeScript → JavaScript
+RUN npm run build
 
-# Expose port
+
+# =========================
+# Stage 2: Runner (Production)
+# =========================
+FROM node:20-alpine AS runner
+
+# Create non-root user
+RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+
+WORKDIR /app
+
+# Copy only production dependencies
+COPY package*.json ./
+RUN npm install --only=production
+
+# Copy compiled output from builder
+COPY --from=builder /app/dist ./dist
+
+# Change ownership
+RUN chown -R appuser:appgroup /app
+
+# Drop root
+USER appuser
+
+# Expose app port
 EXPOSE 3000
 
-# Start the server with ts-node-dev for live updates
-CMD ["ts-node-dev", "--respawn", "--transpile-only", "src/server.ts"]
+# Run compiled JS (no ts-node, no dev tools)
+CMD ["node", "dist/server.js"]

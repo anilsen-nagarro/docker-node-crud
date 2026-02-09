@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:3000/items";
+const API_URL = "/api/items";
 
 const form = document.getElementById("itemForm");
 const nameInput = document.getElementById("name");
